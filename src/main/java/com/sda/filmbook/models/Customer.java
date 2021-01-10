@@ -1,9 +1,6 @@
 package com.sda.filmbook.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "customers")
@@ -11,24 +8,26 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customer_id;
+    private Long customerId;
 
     private String name;
     private String surname;
     private String phoneNumber;
     private String email;
     private String adress;
+
+    @OneToMany
     private List<Order> orders;
 
     public Customer() {
     }
 
     public Long getCustomer_id() {
-        return customer_id;
+        return customerId;
     }
 
-    public void setCustomer_id(Long customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomer_id(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
