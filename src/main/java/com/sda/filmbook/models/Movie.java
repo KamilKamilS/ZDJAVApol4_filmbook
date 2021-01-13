@@ -24,6 +24,6 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<Rate> rates;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Copy> copies;
 }

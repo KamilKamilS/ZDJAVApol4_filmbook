@@ -21,7 +21,7 @@ public class Customer {
     private String email;
     private String adress;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Order> orders;
 
 }
