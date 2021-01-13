@@ -1,24 +1,29 @@
 package com.sda.filmbook.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity(name = "orders")
+@NoArgsConstructor
+@Data
+@Entity
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long order_Id;
+    private Long orderId;
 
+    @ManyToOne
+    @JoinColumn(name = "customerId")
     private Customer customer;
     private LocalDate orderedDate;
     private LocalDate returnDate;
     private DelivertType delivertType;
     private PaymentType paymentType;
 
+    @OneToMany(mappedBy = "order")
     private List<Copy> copies;
 }

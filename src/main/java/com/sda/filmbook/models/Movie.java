@@ -1,10 +1,15 @@
 package com.sda.filmbook.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity(name= "movies")
+@NoArgsConstructor
+@Data
+@Entity
 public class Movie {
 
     @Id
@@ -16,11 +21,9 @@ public class Movie {
     private Genre genre;
     private LocalDate yearOfProduction;
 
-    @OneToMany
-    @JoinColumn(name = "rateId")
+    @OneToMany(mappedBy = "movie")
     private List<Rate> rates;
 
-    @OneToMany
-    @JoinColumn(name = "copyId")
+    @OneToMany(mappedBy = "movie")
     private List<Copy> copies;
 }

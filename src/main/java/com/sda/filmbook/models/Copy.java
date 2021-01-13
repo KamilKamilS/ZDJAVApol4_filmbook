@@ -1,33 +1,24 @@
 package com.sda.filmbook.models;
 
-import javax.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+@NoArgsConstructor
+@Data
 @Entity(name = "copies")
 public class Copy {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long copyId;
 
     @ManyToOne
+    @JoinColumn(name = "movieId")
     private Movie movie;
 
-    public Copy() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "orderId")
+    private Order order;
 
-    public Long getCopyId() {
-        return copyId;
-    }
-
-    public void setCopyId(Long copyId) {
-        this.copyId = copyId;
-    }
-
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
 }
