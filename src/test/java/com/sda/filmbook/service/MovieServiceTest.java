@@ -4,7 +4,7 @@ import com.sda.filmbook.model.Genre;
 import com.sda.filmbook.model.Movie;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
-import com.sda.filmbook.service.exception.MovieNotFoundInCatalogue;
+import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,7 +56,7 @@ class MovieServiceTest {
     }
 
     @Test
-    public void shouldGetMovieByTitle() throws MovieNotFoundInCatalogue {
+    public void shouldGetMovieByTitle() throws MovieNotFoundInCatalogueException {
         // given
         movie = new Movie();
         movie.setTitle("Some title");
@@ -78,7 +78,7 @@ class MovieServiceTest {
         // when
 
         // then
-        assertThatExceptionOfType(MovieNotFoundInCatalogue.class)
+        assertThatExceptionOfType(MovieNotFoundInCatalogueException.class)
                 .isThrownBy(() ->movieService.getMovieByTitle(movieTitle));
     }
 
