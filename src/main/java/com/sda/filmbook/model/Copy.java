@@ -1,22 +1,24 @@
-package com.sda.filmbook.models;
+package com.sda.filmbook.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 @NoArgsConstructor
 @Data
-@Entity
-public class Rate {
+@Entity(name = "copies")
+public class Copy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rateId;
+    private Long copyId;
 
     @ManyToOne
-    @JoinColumn(name = "movieID")
+    @JoinColumn(name = "movieId")
     private Movie movie;
-    private int rate;
-    private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "orderId")
+    private Order order;
+
 }

@@ -1,4 +1,4 @@
-package com.sda.filmbook.models;
+package com.sda.filmbook.model;
 
 public enum PaymentType {
     BY_CARD,

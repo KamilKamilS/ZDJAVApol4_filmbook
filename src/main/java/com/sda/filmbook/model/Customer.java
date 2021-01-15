@@ -1,4 +1,4 @@
-package com.sda.filmbook.models;
+package com.sda.filmbook.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
