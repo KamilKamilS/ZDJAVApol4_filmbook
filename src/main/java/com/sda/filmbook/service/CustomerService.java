@@ -14,9 +14,9 @@ public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
 
-    public void createNewCustomer(Customer customer) throws CustomerDataNotValidException {
+    public Customer createNewCustomer(Customer customer) throws CustomerDataNotValidException {
         if(customerDataValid(customer)) {
-            customerRepository.saveAndFlush(customer);
+            return customerRepository.saveAndFlush(customer);
         } else {
             throw new CustomerDataNotValidException();
         }
