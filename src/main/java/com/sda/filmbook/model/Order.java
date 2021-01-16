@@ -1,5 +1,6 @@
 package com.sda.filmbook.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,10 +10,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "orders")
+@Table(name = "carts")
 public class Order {
 
     @Id
@@ -22,6 +24,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customerId")
     private Customer customer;
+
     private LocalDate orderedDate;
     private LocalDate returnDate;
     private DelivertType delivertType;
