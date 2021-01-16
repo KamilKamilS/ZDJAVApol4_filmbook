@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -32,7 +33,6 @@ class SessionCartServiceTest {
         // given
         Movie testMovie = new Movie();
         testMovie.setTitle("Test movie 1");
-
         when(movieRepository.findByTitle(anyString())).thenReturn(Optional.of(testMovie));
 
         // when
@@ -40,7 +40,7 @@ class SessionCartServiceTest {
         SessionCart cart = cartService.getSessionCart();
 
         // then
-        Assertions.assertThat(cart.getMovies()).isEqualTo(Map.of(testMovie, 1));
+        assertThat(cart.getMovies()).isEqualTo(Map.of(testMovie, 1));
     }
 
     @Test
@@ -57,7 +57,19 @@ class SessionCartServiceTest {
         SessionCart cart = cartService.getSessionCart();
 
         // then
-        Assertions.assertThat(cart.getMovies()).isEqualTo(Map.of(testMovie, 2));
+        assertThat(cart.getMovies()).isEqualTo(Map.of(testMovie, 2));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenNonExistingMovieAdded() throws MovieNotFoundInCatalogueException {
+        // given
+        Movie testMovie = new Movie();
+        when(movieRepository.findByTitle(anyString())).thenReturn(Optional.empty());
+        // when
+
+        // then
+        assertThatExceptionOfType(MovieNotFoundInCatalogueException.class)
+                .isThrownBy(() -> cartService.addMovieToCart(testMovie));
     }
 
 
