@@ -1,7 +1,6 @@
 package com.sda.filmbook.service;
 
 import com.sda.filmbook.model.Movie;
-import com.sda.filmbook.model.dto.SessionCart;
 import com.sda.filmbook.repository.CartService;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
