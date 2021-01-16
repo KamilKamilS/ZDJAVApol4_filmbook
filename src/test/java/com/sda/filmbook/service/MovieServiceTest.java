@@ -81,6 +81,4 @@ class MovieServiceTest {
         assertThatExceptionOfType(MovieNotFoundInCatalogueException.class)
                 .isThrownBy(() ->movieService.getMovieByTitle(movieTitle));
     }
-
-    
 }

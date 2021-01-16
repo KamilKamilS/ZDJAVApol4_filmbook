@@ -1,10 +1,12 @@
 package com.sda.filmbook.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Builder
 @NoArgsConstructor
 @Data
 @Entity
