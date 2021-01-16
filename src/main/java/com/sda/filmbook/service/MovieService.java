@@ -20,7 +20,7 @@ public class MovieService {
         throw new MovieAlreadyExistsInCatalogueException(movie.getTitle());
     }
 
-    public Movie getMovieByTitle(String title) throws MovieNotFoundInCatalogueException {
+    public Movie readMovieFromCatalogue(String title) throws MovieNotFoundInCatalogueException {
         return movieRepository.findByTitle(title)
                 .orElseThrow(() -> new MovieNotFoundInCatalogueException(title));
     }

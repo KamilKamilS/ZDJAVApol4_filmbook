@@ -64,7 +64,7 @@ class MovieServiceTest {
         when(movieRepository.findByTitle(movie.getTitle())).thenReturn(Optional.of(movie));
 
         // when
-        Movie getMovie = movieService.getMovieByTitle("Some title");
+        Movie getMovie = movieService.readMovieFromCatalogue("Some title");
 
         // when
         assertThat(getMovie).isEqualTo(movie);
@@ -79,6 +79,6 @@ class MovieServiceTest {
 
         // then
         assertThatExceptionOfType(MovieNotFoundInCatalogueException.class)
-                .isThrownBy(() ->movieService.getMovieByTitle(movieTitle));
+                .isThrownBy(() ->movieService.readMovieFromCatalogue(movieTitle));
     }
 }
