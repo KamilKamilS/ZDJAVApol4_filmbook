@@ -26,9 +26,14 @@ public class Movie {
     private Genre genre;
     private LocalDate yearOfProduction;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(mappedBy = "movie",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Rate> rates = new ArrayList<>();
 
-    @OneToMany(mappedBy = "movie", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private List<Copy> copies;
+    @OneToMany(mappedBy = "movie",
+            orphanRemoval = true,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.EAGER)
+    private List<Copy> copies = new ArrayList<>();
 }

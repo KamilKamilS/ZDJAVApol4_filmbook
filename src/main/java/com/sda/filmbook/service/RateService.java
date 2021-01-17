@@ -5,15 +5,16 @@ import com.sda.filmbook.model.Rate;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class RateService {
 
-    MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
     public List<Rate> addNewRate(Movie movie, Rate rate) throws MovieNotFoundInCatalogueException {
         if (movieRepository.findByTitle(movie.getTitle()).isEmpty()) {

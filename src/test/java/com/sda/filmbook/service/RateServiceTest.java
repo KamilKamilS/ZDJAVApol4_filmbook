@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -53,11 +54,12 @@ class RateServiceTest {
     }
 
     @Test
-    public void shouldAddNewMovieAndThenAddRateToIt() throws MovieAlreadyExistsInCatalogueException, MovieNotFoundInCatalogueException {
+    public void shouldAddNewMovieAndThenUpdateRateToIt() throws MovieAlreadyExistsInCatalogueException, MovieNotFoundInCatalogueException {
         // given
         Movie testMovie = Movie.builder()
                 .title("Test Title2")
                 .genre(Genre.DRAMA)
+                .rates(new ArrayList<>())
                 .build();
         Rate rate = Rate.builder()
                 .rate(7)
@@ -65,15 +67,28 @@ class RateServiceTest {
                 .movie(testMovie)
                 .build();
 
+
+        testMovie.getRates().add(rate);
         movieService.addMovieToCatalogue(testMovie);
+//        rateService.addNewRate(testMovie, rate);
 
         // when
-//        rateService.addNewRate(testMovie, rate);
+
 
         Movie movieFromCatalogue = movieService.readMovieFromCatalogue(testMovie.getTitle());
 
         // then
         assertThat(movieFromCatalogue).isNotNull();
+        assertThat(movieFromCatalogue.getMovieId()).isNotNull();
+        assertThat(movieFromCatalogue.getTitle()).isEqualTo(testMovie.getTitle());
+        assertThat(movieFromCatalogue.getRates().size()).isEqualTo(1);
+
+        rateService.addNewRate(movieFromCatalogue, rate);
+        Movie movieFromCatalogue2 = movieService.readMovieFromCatalogue(testMovie.getTitle());
+
+        assertThat(movieFromCatalogue.getRates().size()).isEqualTo(2);
+
+
 
 
 
