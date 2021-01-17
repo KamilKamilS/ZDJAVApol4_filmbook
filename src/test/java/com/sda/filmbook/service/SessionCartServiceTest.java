@@ -1,12 +1,9 @@
 package com.sda.filmbook.service;
 
-import com.sda.filmbook.model.Order;
 import com.sda.filmbook.model.Movie;
-import com.sda.filmbook.model.dto.SessionCart;
 import com.sda.filmbook.repository.CartService;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
