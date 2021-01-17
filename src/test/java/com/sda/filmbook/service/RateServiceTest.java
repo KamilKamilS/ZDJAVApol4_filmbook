@@ -6,12 +6,16 @@ import com.sda.filmbook.model.Rate;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.annotation.DirtiesContext.*;
 
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest
 public class RateServiceTest {
 
@@ -25,7 +29,7 @@ public class RateServiceTest {
     MovieRepository movieRepository;
 
     @Test
-    public void shouldAddNewMovieAndThenUpdateRateToIt() throws MovieAlreadyExistsInCatalogueException, MovieNotFoundInCatalogueException {
+    public void shouldAddNewMovieWithRatesToCatalogue() throws Throwable {
         // given
         Movie testMovie = new Movie();
         testMovie.setTitle("Ogniem i Mieczem");
@@ -38,11 +42,8 @@ public class RateServiceTest {
 
         testMovie.getRates().add(rate);
         movieService.addMovieToCatalogue(testMovie);
-//        rateService.addNewRate(testMovie, rate);
 
         // when
-
-
         Movie movieFromCatalogue = movieService.readMovieFromCatalogue(testMovie.getTitle());
 
         // then
@@ -59,6 +60,37 @@ public class RateServiceTest {
         rateService.addNewRate(movieFromCatalogue, rate2);
 
         Movie movieFromCatalogue2 = movieService.readMovieFromCatalogue(testMovie.getTitle());
+
+        assertThat(movieFromCatalogue2.getRates().size()).isEqualTo(2);
+    }
+
+    @Disabled
+    @Test
+    public void shouldAddNewRatesToMovieInCatalogue() throws Throwable{
+        // given
+        Movie testMovie = new Movie();
+        testMovie.setTitle("Ogniem i Mieczem");
+        testMovie.setGenre(Genre.DRAMA);
+
+        Rate rate = new Rate();
+        rate.setRate(7);
+        rate.setDescription("Test description");
+        rate.setMovie(testMovie);
+
+        Rate rate2 = new Rate();
+        rate.setRate(3);
+        rate.setDescription("Test description");
+        rate.setMovie(testMovie);
+
+        movieService.addMovieToCatalogue(testMovie);
+        Movie movieFromCatalogue = movieService.readMovieFromCatalogue(testMovie.getTitle());
+        // when
+
+        rateService.addNewRate(movieFromCatalogue, rate);
+        rateService.addNewRate(movieFromCatalogue, rate2);
+
+        Movie movieFromCatalogue2 = movieService.readMovieFromCatalogue(testMovie.getTitle());
+        // then
         assertThat(movieFromCatalogue2.getRates().size()).isEqualTo(2);
     }
 

@@ -7,6 +7,8 @@ import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor
@@ -27,7 +29,7 @@ public class MovieService {
                 .orElseThrow(() -> new MovieNotFoundInCatalogueException(title));
     }
 
-//    public List<Movie> getPremiereMovies() {
-//
-//    }
+    public List<Movie> getPremiereMovies() {
+        return Collections.emptyList();
+    }
 }

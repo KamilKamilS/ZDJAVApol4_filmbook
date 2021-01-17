@@ -31,7 +31,7 @@ class MovieServiceTest {
         movie = new Movie();
         movie.setTitle("Some title");
         movie.setGenre(Genre.ACTION);
-        when(movieRepository.save(movie)).thenReturn(movie);
+        when(movieRepository.saveAndFlush(movie)).thenReturn(movie);
 
         // when
         Movie movieAdded = movieService.addMovieToCatalogue(movie);

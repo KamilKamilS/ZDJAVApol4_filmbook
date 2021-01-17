@@ -26,7 +26,6 @@ public class RateService {
             movieFromCatalogue.setRates(rateList);
             movieRepository.saveAndFlush(movieFromCatalogue);
             return rateList;
-            // TODO - corect???
         }
     }
 }
