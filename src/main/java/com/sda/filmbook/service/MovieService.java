@@ -15,7 +15,7 @@ public class MovieService {
 
     public Movie addMovieToCatalogue(Movie movie) throws MovieAlreadyExistsInCatalogueException {
         if (movieRepository.findByTitle(movie.getTitle()).isEmpty()) {
-            return movieRepository.save(movie);
+            return movieRepository.saveAndFlush(movie);
         }
         throw new MovieAlreadyExistsInCatalogueException(movie.getTitle());
     }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -26,7 +27,7 @@ public class Movie {
     private LocalDate yearOfProduction;
 
     @OneToMany(mappedBy = "movie")
-    private List<Rate> rates;
+    private List<Rate> rates = new ArrayList<>();
 
     @OneToMany(mappedBy = "movie", orphanRemoval = true, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Copy> copies;
