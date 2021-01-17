@@ -6,24 +6,14 @@ import com.sda.filmbook.model.Rate;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class RateServiceTest {
+public class RateServiceTest {
 
     @Autowired
     RateService rateService;
@@ -31,42 +21,20 @@ class RateServiceTest {
     @Autowired
     MovieService movieService;
 
-    @MockBean
+    @Autowired
     MovieRepository movieRepository;
-
-    @Test
-    public void shouldAddNewRateToGivenMovie() throws MovieNotFoundInCatalogueException {
-        // given
-        Movie movie = new Movie();
-        movie.setTitle("Test title");
-        Rate rate = Rate.builder()
-                .rate(7)
-                .description("Test description")
-                .movie(movie)
-                .build();
-        when(movieRepository.findByTitle(movie.getTitle())).thenReturn(Optional.of(movie));
-
-        // when
-        List<Rate> rateList = rateService.addNewRate(movie, rate);
-
-        // then
-        assertThat(rateList).isEqualTo(Arrays.asList(rate));
-    }
 
     @Test
     public void shouldAddNewMovieAndThenUpdateRateToIt() throws MovieAlreadyExistsInCatalogueException, MovieNotFoundInCatalogueException {
         // given
-        Movie testMovie = Movie.builder()
-                .title("Test Title2")
-                .genre(Genre.DRAMA)
-                .rates(new ArrayList<>())
-                .build();
-        Rate rate = Rate.builder()
-                .rate(7)
-                .description("Test desciption")
-                .movie(testMovie)
-                .build();
+        Movie testMovie = new Movie();
+        testMovie.setTitle("Ogniem i Mieczem");
+        testMovie.setGenre(Genre.DRAMA);
 
+        Rate rate = new Rate();
+        rate.setRate(7);
+        rate.setDescription("Test description");
+        rate.setMovie(testMovie);
 
         testMovie.getRates().add(rate);
         movieService.addMovieToCatalogue(testMovie);
@@ -83,15 +51,15 @@ class RateServiceTest {
         assertThat(movieFromCatalogue.getTitle()).isEqualTo(testMovie.getTitle());
         assertThat(movieFromCatalogue.getRates().size()).isEqualTo(1);
 
-        rateService.addNewRate(movieFromCatalogue, rate);
+        Rate rate2 = new Rate();
+        rate2.setRate(7);
+        rate2.setDescription("Test description");
+        rate2.setMovie(testMovie);
+
+        rateService.addNewRate(movieFromCatalogue, rate2);
+
         Movie movieFromCatalogue2 = movieService.readMovieFromCatalogue(testMovie.getTitle());
-
-        assertThat(movieFromCatalogue.getRates().size()).isEqualTo(2);
-
-
-
-
-
-
+        assertThat(movieFromCatalogue2.getRates().size()).isEqualTo(2);
     }
+
 }
