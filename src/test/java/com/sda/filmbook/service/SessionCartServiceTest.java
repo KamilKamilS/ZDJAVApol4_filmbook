@@ -4,6 +4,7 @@ import com.sda.filmbook.model.Movie;
 import com.sda.filmbook.repository.CartService;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,10 +35,10 @@ class SessionCartServiceTest {
 
         // when
         cartService.addMovieToCart(testMovie);
-        SessionCart cart = cartService.getSessionCart();
+        Map<Movie, Integer> cart = cartService.getSessionCart();
 
         // then
-        assertThat(cart.getMovies()).isEqualTo(Map.of(testMovie, 1));
+        assertThat(cart).isEqualTo(Map.of(testMovie, 1));
     }
 
     @Test
@@ -51,10 +52,10 @@ class SessionCartServiceTest {
         // when
         cartService.addMovieToCart(testMovie);
         cartService.addMovieToCart(testMovie);
-        SessionCart cart = cartService.getSessionCart();
+        Map<Movie, Integer> cart = cartService.getSessionCart();
 
         // then
-        assertThat(cart.getMovies()).isEqualTo(Map.of(testMovie, 2));
+        assertThat(cart).isEqualTo(Map.of(testMovie, 2));
     }
 
     @Test
