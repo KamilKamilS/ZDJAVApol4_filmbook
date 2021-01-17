@@ -10,13 +10,17 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @AllArgsConstructor
 @Service
 @Scope(value = WebApplicationContext.SCOPE_SESSION,
         proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class SessionCartService implements CartService {
 
-    private SessionCart sessionCart;
+
+    private Map<Movie, Integer> movies;
     private MovieRepository movieRepository;
 
     @Override
@@ -24,12 +28,20 @@ public class SessionCartService implements CartService {
         if (movieRepository.findByTitle(movie.getTitle()).isEmpty()) {
             throw new MovieNotFoundInCatalogueException(movie.getTitle());
         } else {
-            sessionCart.addMovie(movie, sessionCart.getQuantities(movie));
+            movies.put(movie, this.getQuantities(movie));
         }
     }
 
     @Override
-    public SessionCart getSessionCart() {
-        return sessionCart;
+    public Map<Movie, Integer> getSessionCart() {
+        return movies;
+    }
+
+    public Map<Movie, Integer> getMovies() {
+        return movies;
+    }
+
+    private int getQuantities(Movie movie) {
+        return getMovies().get(movie) == null ? 1 : getMovies().get(movie) + 1;
     }
 }

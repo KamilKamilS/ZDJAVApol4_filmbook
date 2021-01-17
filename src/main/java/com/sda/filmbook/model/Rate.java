@@ -23,4 +23,6 @@ public class Rate {
     private Movie movie;
     private int rate;
     private String description;
+
+    //TODO - rate service
 }
