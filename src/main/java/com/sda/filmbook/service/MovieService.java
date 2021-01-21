@@ -24,9 +24,17 @@ public class MovieService {
         throw new MovieAlreadyExistsInCatalogueException(movie.getTitle());
     }
 
+    public List<Movie> readAllMoviesFromCatalogue() {
+        return movieRepository.findAll();
+    }
+
     public Movie readMovieFromCatalogue(String title) throws MovieNotFoundInCatalogueException {
         return movieRepository.findByTitle(title)
                 .orElseThrow(() -> new MovieNotFoundInCatalogueException(title));
+    }
+
+    public void deleteMovieFromCatalogue(Long id) {
+        movieRepository.deleteById(id);
     }
 
     public List<Movie> getPremiereMovies() {

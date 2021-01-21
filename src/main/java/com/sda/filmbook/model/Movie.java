@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,13 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
 
+    @NotNull
     private String title;
+    @NotNull
     private String description;
+    @NotNull
     private Genre genre;
+
     private LocalDate releaseDate;
 
     @OneToMany(mappedBy = "movie",
