@@ -6,8 +6,6 @@ import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
 import com.sda.filmbook.util.FieldErrorMessage;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,7 +32,7 @@ public class MovieController {
 //    }
 
     @GetMapping("/movie")
-    public List<Movie> getAll() throws MovieNotFoundInCatalogueException {
+    public List<Movie> getAll() {
         return movieService.readAllMoviesFromCatalogue();
     }
 

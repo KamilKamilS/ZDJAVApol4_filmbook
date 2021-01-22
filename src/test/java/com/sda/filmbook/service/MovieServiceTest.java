@@ -31,6 +31,7 @@ class MovieServiceTest {
         movie = new Movie();
         movie.setTitle("Some title");
         movie.setGenre(Genre.ACTION);
+        movie.setDescription("description");
         when(movieRepository.saveAndFlush(movie)).thenReturn(movie);
 
         // when
@@ -46,6 +47,7 @@ class MovieServiceTest {
         movie = new Movie();
         movie.setTitle("Some title");
         movie.setGenre(Genre.ACTION);
+        movie.setDescription("description");
         when(movieRepository.findByTitle(movie.getTitle())).thenReturn(Optional.of(movie));
 
         // when
@@ -61,6 +63,7 @@ class MovieServiceTest {
         movie = new Movie();
         movie.setTitle("Some title");
         movie.setGenre(Genre.DRAMA);
+        movie.setDescription("description");
         when(movieRepository.findByTitle(movie.getTitle())).thenReturn(Optional.of(movie));
 
         // when
