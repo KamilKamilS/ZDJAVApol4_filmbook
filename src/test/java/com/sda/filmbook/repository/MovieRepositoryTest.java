@@ -1,6 +1,7 @@
 package com.sda.filmbook.repository;
 
 import com.sda.filmbook.model.Copy;
+import com.sda.filmbook.model.Genre;
 import com.sda.filmbook.model.Movie;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,27 +27,28 @@ public class MovieRepositoryTest {
         //given
         String title = "Ogniem i Mieczem";
 
-        Movie m1 = new Movie();
-        m1.setTitle(title);
-        m1.setReleaseDate(LocalDate.of(1999, 2, 11));
+        Movie movie = new Movie();
+        movie.setTitle(title);
+        movie.setGenre(Genre.DRAMA);
+        movie.setDescription("aaa");
 
         //create related copies
-        Copy c1 = new Copy();
-        c1.setMovie(m1);
-        Copy c2 = new Copy();
-        c2.setMovie(m1);
+        Copy copy = new Copy();
+        copy.setMovie(movie);
+        Copy copy2 = new Copy();
+        copy2.setMovie(movie);
 
         List<Copy> copies = new ArrayList<>();
-        copies.add(c1);
-        copies.add(c2);
+        copies.add(copy);
+        copies.add(copy2);
         //add copies list to movie
-        m1.setCopies(copies);
+        movie.setCopies(copies);
 
         Optional<Movie> foundMovieOptional = movieRepository.findByTitle(title);
         Assertions.assertThat(foundMovieOptional.isEmpty()).isTrue();
 
         //when
-        movieRepository.save(m1);
+        movieRepository.save(movie);
         foundMovieOptional = movieRepository.findByTitle(title);
         Assertions.assertThat(foundMovieOptional.isPresent()).isTrue();
         Movie foundMovie = foundMovieOptional.get();
@@ -54,8 +56,8 @@ public class MovieRepositoryTest {
         List<Copy> foundCopies = copyRepository.findAll();
 
         //then
-        Assertions.assertThat(foundMovie.getTitle()).isEqualTo(m1.getTitle());
-        Assertions.assertThat(foundMovie.getReleaseDate()).isEqualTo(m1.getReleaseDate());
+        Assertions.assertThat(foundMovie.getTitle()).isEqualTo(movie.getTitle());
+        Assertions.assertThat(foundMovie.getReleaseDate()).isEqualTo(movie.getReleaseDate());
 
         Assertions.assertThat(foundCopies.isEmpty()).isFalse();
     }

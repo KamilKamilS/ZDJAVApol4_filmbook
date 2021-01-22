@@ -23,7 +23,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-//@RunWith(JUnitPlatform.class)
 @SpringBootTest
 class RateServiceMockedTest {
 
@@ -33,11 +32,6 @@ class RateServiceMockedTest {
 
     @MockBean
     MovieRepository movieRepository;
-
-//    @Before
-//    public void init() {
-//        MockitoAnnotations.initMocks(this);
-//    }
 
     @Test
     public void shouldAddNewRateToGivenMovie() throws MovieNotFoundInCatalogueException {

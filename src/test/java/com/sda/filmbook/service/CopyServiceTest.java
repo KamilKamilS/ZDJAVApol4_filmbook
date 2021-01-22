@@ -1,11 +1,9 @@
 package com.sda.filmbook.service;
 
 import com.sda.filmbook.model.Copy;
-import com.sda.filmbook.model.Genre;
 import com.sda.filmbook.model.Movie;
 import com.sda.filmbook.repository.CopyRepository;
 import com.sda.filmbook.repository.MovieRepository;
-import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

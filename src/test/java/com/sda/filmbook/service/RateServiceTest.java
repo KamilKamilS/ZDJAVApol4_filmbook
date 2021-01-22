@@ -4,9 +4,6 @@ import com.sda.filmbook.model.Genre;
 import com.sda.filmbook.model.Movie;
 import com.sda.filmbook.model.Rate;
 import com.sda.filmbook.repository.MovieRepository;
-import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
-import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -68,11 +65,11 @@ public class RateServiceTest {
         assertThat(movieFromCatalogue2.getRates().size()).isEqualTo(2);
 
         Rate rate3 = new Rate();
-        rate2.setRate(8);
-        rate2.setDescription("Test description");
-        rate2.setMovie(testMovie);
+        rate3.setRate(8);
+        rate3.setDescription("Test description");
+        rate3.setMovie(testMovie);
 
-        rateService.addNewRate(movieFromCatalogue, rate2);
+        rateService.addNewRate(movieFromCatalogue, rate3);
 
         Movie movieFromCatalogue3 = movieService.readMovieFromCatalogue(testMovie.getTitle());
 
@@ -94,9 +91,9 @@ public class RateServiceTest {
         rate.setMovie(testMovie);
 
         Rate rate2 = new Rate();
-        rate.setRate(3);
-        rate.setDescription("Test descriptionn");
-        rate.setMovie(testMovie);
+        rate2.setRate(3);
+        rate2.setDescription("Test descriptionn");
+        rate2.setMovie(testMovie);
 
         movieService.addMovieToCatalogue(testMovie);
         Movie movieFromCatalogue = movieService.readMovieFromCatalogue(testMovie.getTitle());
