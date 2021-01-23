@@ -16,10 +16,15 @@ import java.util.List;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest
-class MovieTestControllerTest {
+class MovieControllerTest {
 
     @Autowired
     MovieController movieController;
+
+    @Test
+    public void contextLoads() throws Exception {
+        Assertions.assertThat(movieController).isNotNull();
+    }
 
     @Test
     public void shouldCreateReadDelete() throws Throwable {
