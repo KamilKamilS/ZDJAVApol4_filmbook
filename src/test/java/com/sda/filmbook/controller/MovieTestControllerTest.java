@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @SpringBootTest
-class MovieControllerTest {
+class MovieTestControllerTest {
 
     @Autowired
     MovieController movieController;

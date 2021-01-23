@@ -38,7 +38,7 @@ public class MovieController {
         return movieService.readAllMoviesFromCatalogue();
     }
 
-    @GetMapping("movie/search")
+    @GetMapping("/movie/search")
     public List<Movie> findByQuery(@RequestParam(value = "genre", required = false) Genre genre,
                                    @RequestParam(value = "initialDate", required = false) LocalDate initialDate,
                                    @RequestParam(value = "finalDate", required = false) LocalDate finalDate) {
@@ -60,7 +60,7 @@ public class MovieController {
         return movieService.addMovieToCatalogue(movie);
     }
 
-    @DeleteMapping("movie/{id}")
+    @DeleteMapping("/movie/{id}")
     public void delete(@PathVariable Long id) {
         movieService.deleteMovieFromCatalogue(id);
     }
