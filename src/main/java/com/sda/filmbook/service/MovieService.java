@@ -1,17 +1,18 @@
 package com.sda.filmbook.service;
 
+import com.sda.filmbook.model.Copy;
 import com.sda.filmbook.model.Genre;
 import com.sda.filmbook.model.Movie;
 import com.sda.filmbook.repository.MovieRepository;
+import com.sda.filmbook.service.exception.CopyNotFoundException;
 import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
 import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
 import lombok.AllArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -65,6 +66,17 @@ public class MovieService {
 
     public List<Movie> getMoviesByGenreAndReleaseDateBetween(Genre genre, LocalDate initialDate,  LocalDate finalDate) {
         return movieRepository.findMovieByGenreEqualsAndReleaseDateBetween(genre, initialDate, finalDate);
+    }
+
+    public Copy getFreeCopyOfMovie(Movie movie) throws CopyNotFoundException {
+        List<Copy> copies = movieRepository.findByTitle(movie.getTitle()).get().getCopies();
+
+        Optional<Copy> copy = copies.stream().findFirst();
+        if (copy.isPresent()) {
+            return copy.get();
+        } else {
+            throw new CopyNotFoundException(movie.getTitle());
+        }
     }
 
 
