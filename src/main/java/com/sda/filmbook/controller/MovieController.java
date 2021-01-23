@@ -1,5 +1,6 @@
 package com.sda.filmbook.controller;
 
+import com.sda.filmbook.model.Genre;
 import com.sda.filmbook.model.Movie;
 import com.sda.filmbook.service.MovieService;
 import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,22 @@ public class MovieController {
         return movieService.readAllMoviesFromCatalogue();
     }
 
+    @GetMapping("movie/search")
+    public List<Movie> findByQuery(@RequestParam(value = "genre", required = false) Genre genre,
+                                   @RequestParam(value = "initialDate", required = false) LocalDate initialDate,
+                                   @RequestParam(value = "finalDate", required = false) LocalDate finalDate) {
+        if (genre != null && initialDate != null && finalDate != null) {
+            return movieService.getMoviesByGenreAndReleaseDateBetween(genre, initialDate, finalDate);
+        } else if (genre != null && initialDate != null) {
+            return movieService.getMoviesByGenreAndReleaseDateBefore(genre, initialDate);
+        } else if (genre != null) {
+            return movieService.getMoviesByGenre(genre);
+        } else if (initialDate != null) {
+            return movieService.getMoviesByReleaseDateBefore(initialDate);
+        } else {
+            return movieService.readAllMoviesFromCatalogue();
+        }
+    }
 
     @PostMapping("/movie")
     public Movie add(@Valid @RequestBody Movie movie) throws MovieAlreadyExistsInCatalogueException {

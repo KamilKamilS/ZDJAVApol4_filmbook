@@ -1,5 +1,6 @@
 package com.sda.filmbook.service;
 
+import com.sda.filmbook.model.Genre;
 import com.sda.filmbook.model.Movie;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
@@ -7,6 +8,7 @@ import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -40,4 +42,30 @@ public class MovieService {
     public List<Movie> getPremiereMovies() {
         return Collections.emptyList();
     }
+
+    public List<Movie> getMoviesByGenre(Genre genre) {
+        return movieRepository.findMovieByGenreEquals(genre);
+    }
+
+    public List<Movie> getMoviesByReleaseDateBefore(LocalDate date) {
+        return movieRepository.findMovieByReleaseDateAfter(date);
+    }
+
+    public List<Movie> getMoviesByReleaseDateBetween(LocalDate initialDate, LocalDate finalDate) {
+        return movieRepository.findMovieByReleaseDateBetween(initialDate, finalDate);
+    }
+
+    public List<Movie> getMoviesWithRatesGraterThan(int rate) {
+        return movieRepository.findMovieByRatesGreaterThan(rate);
+    }
+
+    public List<Movie> getMoviesByGenreAndReleaseDateBefore(Genre genre, LocalDate date) {
+        return movieRepository.findMovieByGenreEqualsAndReleaseDateAfter(genre, date);
+    }
+
+    public List<Movie> getMoviesByGenreAndReleaseDateBetween(Genre genre, LocalDate initialDate,  LocalDate finalDate) {
+        return movieRepository.findMovieByGenreEqualsAndReleaseDateBetween(genre, initialDate, finalDate);
+    }
+
+
 }
