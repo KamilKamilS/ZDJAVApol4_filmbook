@@ -25,6 +25,7 @@ public class Movie {
     @NotNull
     private String description;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Genre genre;
 
     private LocalDate releaseDate;

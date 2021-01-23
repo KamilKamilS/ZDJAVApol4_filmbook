@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class MovieServiceTest {
+class MovieTestServiceTest {
 
     @Autowired
     MovieService movieService;

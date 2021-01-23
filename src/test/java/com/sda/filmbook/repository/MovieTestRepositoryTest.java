@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @DataJpaTest    //testujemy tylko warstwe persystencji
-public class MovieRepositoryTest {
+public class MovieTestRepositoryTest {
 
     @Autowired
     private MovieRepository movieRepository;
