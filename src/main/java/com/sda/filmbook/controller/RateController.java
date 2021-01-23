@@ -2,6 +2,7 @@ package com.sda.filmbook.controller;
 
 import com.sda.filmbook.model.Rate;
 import com.sda.filmbook.service.RateService;
+import com.sda.filmbook.service.exception.MovieNotFoundInCatalogueException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class RateController {
 
     @PostMapping("/rate")
     public ResponseEntity<Rate> addNewRateToMovie(@RequestBody Rate rate,
-                                                  @RequestParam(value = "movieId", required = true) Long movieId) {
+                                                  @RequestParam(value = "movieId", required = true) Long movieId) throws MovieNotFoundInCatalogueException {
         return ResponseEntity.status(HttpStatus.OK).body(rateService.addNewRate(movieId, rate));
     }
 
