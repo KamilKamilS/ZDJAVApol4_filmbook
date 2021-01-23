@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,14 +47,13 @@ class RateServiceMockedTest {
         rate.setDescription("Test description");
         rate.setMovie(movie);
 
-        when(movieRepository.findByTitle(movie.getTitle())).thenReturn(Optional.of(movie));
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
 
         // when
-        List<Rate> rateList = rateService.addNewRate(movie, rate);
-        rateList = rateService.addNewRate(movie, rate);
+        Rate addedRate = rateService.addNewRate(anyLong(), rate);
 
         // then
-        assertThat(rateList.size()).isEqualTo(2);
+        assertThat(addedRate).isNotNull();
     }
 
 }

@@ -58,7 +58,7 @@ public class RateServiceTest {
         rate2.setDescription("Test description");
         rate2.setMovie(testMovie);
 
-        rateService.addNewRate(movieFromCatalogue, rate2);
+        rateService.addNewRate(movieFromCatalogue.getMovieId(), rate2);
 
         Movie movieFromCatalogue2 = movieService.readMovieFromCatalogue(testMovie.getTitle());
 
@@ -69,7 +69,7 @@ public class RateServiceTest {
         rate3.setDescription("Test description");
         rate3.setMovie(testMovie);
 
-        rateService.addNewRate(movieFromCatalogue, rate3);
+        rateService.addNewRate(movieFromCatalogue.getMovieId(), rate3);
 
         Movie movieFromCatalogue3 = movieService.readMovieFromCatalogue(testMovie.getTitle());
 
@@ -99,11 +99,11 @@ public class RateServiceTest {
         Movie movieFromCatalogue = movieService.readMovieFromCatalogue(testMovie.getTitle());
         // when
 
-        List<Rate> rateList = rateService.addNewRate(movieFromCatalogue, rate);
-        assertThat(rateList.size()).isEqualTo(1);
+        Rate addedRate = rateService.addNewRate(movieFromCatalogue.getMovieId(), rate);
+        assertThat(addedRate).isNotNull();
 
         Movie movieFromCatalogue1 = movieService.readMovieFromCatalogue(testMovie.getTitle());
-        rateService.addNewRate(movieFromCatalogue, rate2);
+        rateService.addNewRate(movieFromCatalogue.getMovieId(), rate2);
 
         Movie movieFromCatalogue2 = movieService.readMovieFromCatalogue(testMovie.getTitle());
         // then
