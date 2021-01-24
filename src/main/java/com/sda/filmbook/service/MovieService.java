@@ -3,6 +3,7 @@ package com.sda.filmbook.service;
 import com.sda.filmbook.model.Copy;
 import com.sda.filmbook.model.Genre;
 import com.sda.filmbook.model.Movie;
+import com.sda.filmbook.model.Status;
 import com.sda.filmbook.repository.MovieRepository;
 import com.sda.filmbook.service.exception.CopyNotFoundException;
 import com.sda.filmbook.service.exception.MovieAlreadyExistsInCatalogueException;
@@ -68,12 +69,16 @@ public class MovieService {
         return movieRepository.findMovieByGenreEqualsAndReleaseDateBetween(genre, initialDate, finalDate);
     }
 
+    // TODO - jest ok czy lepeij to zrobic przez copy repository
     public Copy getFreeCopyOfMovie(Movie movie) throws CopyNotFoundException {
         List<Copy> copies = movieRepository.findByTitle(movie.getTitle()).get().getCopies();
 
-        Optional<Copy> copy = copies.stream().findFirst();
-        if (copy.isPresent()) {
-            return copy.get();
+        Optional<Copy> availableCopy = copies.stream()
+                .filter(copy -> copy.getStatus().equals(Status.AVAILABLE))
+                .findFirst();
+
+        if (availableCopy.isPresent()) {
+            return availableCopy.get();
         } else {
             throw new CopyNotFoundException(movie.getTitle());
         }

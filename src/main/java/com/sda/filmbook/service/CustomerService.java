@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerService {
 
-    @Autowired
     CustomerRepository customerRepository;
 
     public Customer createNewCustomer(Customer customer) throws CustomerDataNotValidException {
