@@ -1,13 +1,11 @@
 package com.sda.filmbook.service;
 
-import com.sda.filmbook.model.Copy;
-import com.sda.filmbook.model.Customer;
-import com.sda.filmbook.model.Movie;
-import com.sda.filmbook.model.Order;
+import com.sda.filmbook.model.*;
 import com.sda.filmbook.repository.CopyRepository;
 import com.sda.filmbook.repository.CustomerRepository;
 import com.sda.filmbook.repository.OrderRepository;
 import com.sda.filmbook.service.exception.CopyNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class OrderService {
 
     CustomerRepository customerRepository;
@@ -26,7 +24,7 @@ public class OrderService {
     MovieService movieService;
     SessionCartService sessionCart;
 
-    public Order addCopiesToOrderForCustomer(Long customerId) throws CopyNotFoundException {
+    public Order addCopiesToOrder(Long customerId) throws CopyNotFoundException {
         Optional<Customer> customer = customerRepository.findById(customerId);
         Map<Movie, Integer> moviesCopyMap = this.sessionCart.getSessionCart();
         List<Copy> copies = new ArrayList<>();
@@ -36,11 +34,13 @@ public class OrderService {
             Movie movie = entry.getKey();
             for (int i = 0; i < numberOfCopy; i++) {
                 Copy copy = movieService.getFreeCopyOfMovie(movie);
+                copy.setStatus(Status.UNAVAILABLE);
                 copies.add(copy);
             }
         }
         Order order = createOrder();
         order.setCopies(copies);
+        order.setCustomer(customer.get());
 
         return orderRepository.saveAndFlush(order);
     }
