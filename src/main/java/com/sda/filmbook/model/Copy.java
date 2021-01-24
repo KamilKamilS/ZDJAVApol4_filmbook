@@ -14,6 +14,9 @@ public class Copy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long copyId;
 
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.AVAILABLE;
+
     @ManyToOne
     @JoinColumn(name = "movieId")
     private Movie movie;

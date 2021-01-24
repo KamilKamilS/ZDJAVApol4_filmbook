@@ -17,4 +17,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findMovieByRatesGreaterThan(int rate);
     List<Movie> findMovieByGenreEqualsAndReleaseDateAfter(Genre genre, LocalDate date);
     List<Movie> findMovieByGenreEqualsAndReleaseDateBetween(Genre genre, LocalDate initialDate, LocalDate finalDate);
+
 }
